@@ -197,7 +197,7 @@ export default class Public extends React.Component {
               {AboutComp ? (
                 <>
                   <Button
-                    text="Help"
+                    text="Report a problem"
                     minimal
                     icon={IconNames.info_sign}
                     onClick={this.handleToggleAbout}
@@ -207,7 +207,7 @@ export default class Public extends React.Component {
                     icon={IconNames.INBOX}
                     isOpen={this.state.isAboutOpen}
                     onClose={this.handleToggleAbout}
-                    title="Report problems"
+                    title="Report a problem"
                   >
                     <div className={Classes.DIALOG_BODY}>
                       <AboutComp />
