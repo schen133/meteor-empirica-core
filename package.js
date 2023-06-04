@@ -1,5 +1,5 @@
 Package.describe({
-  name: "empirica:core",
+  name: "custome-empiricacore",
   version: "1.17.0",
   summary: "Core Meteor package for the experiment Empirica platform.",
   git: "https://github.com/empiricaly/meteor-empirica-core.git",
