@@ -3,7 +3,6 @@ const showOpenAltPlayer =
   Meteor.isDevelopment || Meteor.settings.public.debug_resetSession;
 const showReset =
   Meteor.isDevelopment || Meteor.settings.public.debug_newPlayer;
-
 import {
   Button,
   Classes,
@@ -22,11 +21,17 @@ import { CoreWrapper } from "./Helpers.jsx";
 import Loading from "./Loading.jsx";
 import NewPlayer from "./NewPlayer.jsx";
 import NoBatchOriginal from "./NoBatch.jsx";
+import IntroTimer from "./PublicLobbyTimer.jsx";
+// import { Log } from 'meteor/logging'
 
 const loadDocTitle = document.title;
 
 export default class Public extends React.Component {
-  state = { isAboutOpen: false };
+  state = { isAboutOpen: false, 
+    showTimer: false,
+    timeoutSeconds: null,
+    meteorMethodCalled: false
+  };
 
   handleToggleAbout = () =>
     this.setState({ isAboutOpen: !this.state.isAboutOpen });
@@ -79,6 +84,34 @@ export default class Public extends React.Component {
     }
   };
 
+    renderTimerComponent = (start, seconds) => {
+      if(seconds){
+  const { timeoutSeconds } = seconds
+    // Replace 'YourTimerComponent' with the actual component you want to render when conditions are met
+    return timeoutSeconds !== null ? <IntroTimer startTime={start.toString()} seconds={seconds}/>
+ : null;
+      }
+  
+  };
+
+  // componentDidMount(){
+  //   console.log(this.props);
+  //   console.log(this.state);
+  // }
+
+    //   componentDidUpdate() {
+    //     if(this.props.gameLobbyy){
+    //     // console.log("gameLobby exists now");
+    //     // console.log("There are now somebody in Prelobby");
+    //     // showTimer = true;
+    //     if(this.props.gameLobbyy.timeoutStartedAt){
+    //       // showTimer = true;
+    //       this.setState({showTimer: true})
+    //     }
+    // }
+    //   }
+
+
   render() {
     const {
       loading,
@@ -88,9 +121,54 @@ export default class Public extends React.Component {
       NewPlayer: CustomNewPlayer,
       About,
       NoBatch,
+      gameLobbyy,
       ...rest
     } = this.props;
     const { player } = rest;
+    // const { showTimer, timeoutSeconds } = this.state;
+
+    var timeoutSeconds = null;
+     var showTimer = false;
+     var renderYet = false;
+
+    
+    if(gameLobbyy){
+        // console.log("gameLobby exists now");
+        // console.log("There are now somebody in Prelobby");
+        // showTimer = true;
+        if(gameLobbyy.timeoutStartedAt){
+          showTimer = true;
+          // this.setState({showTimer: true})
+        }
+    }
+
+    if(showTimer==true){
+    Meteor.call('getTimeoutSeconds', gameLobbyy.lobbyConfigId, (error, result) => {
+      if (error) {
+        console.error('Error trying to fetch for lobbyConfigID', error);
+      } else {
+        console.log('message from meteor method', result);
+        timeoutSeconds=result;
+        console.log(timeoutSeconds);
+        console.log(renderYet);
+      }
+    });
+    }
+
+    if(showTimer===true && Number.isInteger(timeoutSeconds)){
+      renderYet = true;
+      console.log(renderYet);
+    }
+
+//     if (timeoutSeconds !== null) {
+//   // Your logic when timeoutSeconds is not null
+//   console.log('timeoutSeconds is not null:', timeoutSeconds);
+// } else {
+//   // Your logic when timeoutSeconds is null
+//   console.log('timeoutSeconds is null');
+// }
+  
+
     // const AboutComp = About || AboutOriginal;
     const AboutComp = About || null;
     const NoBatchComp = NoBatch || NoBatchOriginal;
@@ -134,8 +212,21 @@ export default class Public extends React.Component {
       title += ` (${playerIdKey})`;
     }
 
+    // if(gameLobbyy){
+    //     // console.log("gameLobby exists now");
+    //     // console.log("There are now somebody in Prelobby");
+    //     // showTimer = true;
+    //     if(gameLobbyy.timeoutStartedAt){
+    //       showTimer = true;
+    //     }
+    // }
+    // this.componentDidMount
+   
+
     return (
-      <div className="grid">
+      <div className="">
+      {/* <div className="grid"> */}
+
         <Helmet>
           <title>{title}</title>
         </Helmet>
@@ -144,7 +235,11 @@ export default class Public extends React.Component {
           <Header {...adminProps} />
         ) : (
           <div className="header navbar">
-            <div className="navbarGroup">
+          {/* <div className="flex flex-row bg-cyan-900 py-4 text-white"> */}
+
+            <div className="bg-">
+                        {/* <div className="navbarGroup"> */}
+
               <NavbarHeading>
                 <Link
                   className={[
@@ -193,6 +288,18 @@ export default class Public extends React.Component {
               ) : (
                 ""
               )}
+              {showTimer ? (
+                <>
+                  {/* <h1> timer</h1> */}
+                  {/* <IntroTimer /> */}
+                  {/* <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()} seconds={timeoutSeconds}/> */}
+                  <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()}/>
+
+                
+                </>
+              ) : ("")}
+
+        {/* {showTimer && this.renderTimerComponent(gameLobbyy.timeoutStartedAt, timeoutSeconds)} */}
 
               {AboutComp ? (
                 <>
@@ -229,7 +336,12 @@ export default class Public extends React.Component {
           </div>
         )}
 
-        <main>{content}</main>
+        <main className="">
+        
+        
+        {content}
+        
+        </main>
       </div>
     );
   }

@@ -9,6 +9,14 @@ import {
 
 export const LobbyConfigs = new Mongo.Collection("lobby_configs");
 
+Meteor.methods({
+  getTimeoutSeconds(lobbyConfigID){
+    const lobbyConfig = LobbyConfigs.findOne({ _id: lobbyConfigID });
+    const timeoutseconds = lobbyConfig.timeoutInSeconds;
+    return timeoutseconds;
+  }
+});
+
 LobbyConfigs.helpers({
   displayName() {
     if (this.name) {

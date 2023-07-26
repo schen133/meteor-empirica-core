@@ -6,6 +6,7 @@ import { createGameFromLobby } from "../games/create";
 
 import { checkBatchFull, checkForBatchFinished } from "../games/hooks.js";
 
+
 // Check if batch is full or the game finished if this lobby timed out
 GameLobbies.after.update(function(
   userId,
@@ -29,7 +30,7 @@ GameLobbies.after.update(
       !(
         fieldNames.includes("playerIds") ||
         (fieldNames.includes("status") && doc.status == "running")
-      )
+      ) 
     ) {
       return;
     }

@@ -10,9 +10,10 @@ import { Players } from "../../api/players/players.js";
 import { ActivityMonitor } from "../../lib/monitor.js";
 import Public from "../components/Public";
 
-const withStageDependencies = withTracker(({ loading, game, ...rest }) => {
+const withStageDependencies = withTracker(({ loading, game, gameLobby, ...rest }) => {
   const gameId = game && game._id;
   const stageId = game && game.currentStageId;
+  const gameLobbyy = gameLobby;
 
   const sub = Meteor.subscribe("gameCurrentRoundStage", {
     gameId,
@@ -28,7 +29,9 @@ const withStageDependencies = withTracker(({ loading, game, ...rest }) => {
   const stages =
     stage && Stages.find({ gameId, roundId: stage.roundId }).fetch();
   const round = stage && Rounds.findOne({ gameId, _id: stage.roundId });
-
+//  const gameLobby = GameLobbies.findOne({
+//     $or: [{ playerIds: playerId }, { queuedPlayerIds: playerId }]
+//   });
   return {
     loading: loading || !sub.ready(),
     game,
@@ -37,6 +40,7 @@ const withStageDependencies = withTracker(({ loading, game, ...rest }) => {
     stage,
     stages,
     round,
+    gameLobbyy,
     ...rest
   };
 })(Public);

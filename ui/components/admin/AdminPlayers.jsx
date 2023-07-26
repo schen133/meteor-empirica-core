@@ -1,7 +1,6 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-
 import {
   Button,
   FormGroup,
@@ -13,7 +12,6 @@ import {
   Classes
 } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-
 import { AdminPageHeader } from "./AdminHeading.jsx";
 import { AlertToaster, SuccessToaster } from "../Toasters.jsx";
 import {

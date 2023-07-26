@@ -19,6 +19,9 @@ GameLobbies.helpers({
   },
   treatment() {
     return Treatments.findOne({ _id: this.treatmentId });
+  },
+  lobbyID(){
+    return this._id;
   }
 });
 

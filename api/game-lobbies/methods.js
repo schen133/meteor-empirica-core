@@ -6,6 +6,8 @@ import { GameLobbies } from "./game-lobbies";
 import { Players } from "../players/players";
 import { Batches } from "../batches/batches.js";
 
+// export const returnGameLobby
+
 export const updateGameLobbyData = new ValidatedMethod({
   name: "GameLobbies.methods.updateData",
 
@@ -32,6 +34,8 @@ export const updateGameLobbyData = new ValidatedMethod({
 
   run({ gameLobbyId, key, value, append, noCallback }) {
     const gameLobby = GameLobbies.findOne(gameLobbyId);
+    console.log("this is gameLobbyId " + gameLobbyId);
+    console.log("this is gameLobby "+ gameLobby);
     if (!gameLobby) {
       throw new Error("game lobbies not found");
     }
@@ -90,6 +94,8 @@ export const earlyExitGameLobby = new ValidatedMethod({
     }
 
     const gameLobby = GameLobbies.findOne(gameLobbyId);
+    console.log("this is gameLobbyId " + gameLobbyId);
+    console.log("this is gameLobby "+ gameLobby);    
     const exitStatus = status || "failed";
     if (!gameLobby) {
       throw new Error("gameLobby not found");

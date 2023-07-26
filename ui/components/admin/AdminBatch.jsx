@@ -7,16 +7,18 @@ import {
   duplicateBatch,
   setBatchInDebugMode,
   updateBatch,
-  updateBatchStatus
+  updateBatchStatus,
 } from "../../../api/batches/methods";
 import AdminBatchGamesContainer from "../../containers/admin/AdminBatchGamesContainer";
 import LoadingInline from "../LoadingInline.jsx";
 import { AlertToaster, SuccessToaster } from "../Toasters.jsx";
+// import { GameLobbies } from "../../../api/game-lobbies/game-lobbies";
 
 export default class AdminBatch extends React.Component {
   state = {
     newIsOpen: false,
-    detailsVisible: false
+    detailsVisible: false,
+    lobbyStatus: null
   };
 
   toggleDetails = () => {
@@ -66,9 +68,78 @@ export default class AdminBatch extends React.Component {
     });
   };
 
+
+  handleManualStartGame = () => {
+    console.log("hello");
+
+    const gameLobbyID = this.props.batch.gameLobbyIds[0];
+    console.log(gameLobbyID);
+
+    var gameLobby = null;
+
+    // startgame first
+    Meteor.call('getLobbyDocument', gameLobbyID, (error, result) => {
+    if (error) {
+      console.error('Error trying to manually start game:', error);
+    } else {
+      gameLobby = result;
+      console.log('Lobby document:', result);
+      // Do something with the result
+    }
+
+    // then update lobby status state variable
+    Meteor.call('lobbyStatus', this.props.batch.gameLobbyIds[0], (error, result) => {
+      if (error) {
+        console.error('Error fetching for lobby status:', error);
+      } else {
+        this.setState({ lobbyStatus: result }); // Update the state with the fetched result
+        console.log('Lobby document:', result);
+      }
+    });
+
+
+  });
+
+// console.log(gameLobby);
+//     Meteor.call('manualStartGame', gameLobby, (error, result) => {
+//     if (error) {
+//       console.error('Error trying to manually start game:', error);
+//     } else {
+//     console.log("game manually started!!");      // Do something with the result
+//     }
+//   });
+
+// allGameLobbies.transform();
+// console.log(allGameLobbies._transform);
+// console.log(GameLobbies._collection._doc);
+
+// console.log(GameLobbies);
+
+// console.log(GameLobbies.find({})
+//       .limit(20)
+//       .map((user) => ({ ...user, _id: user._id }))
+//       .toArray());
+
+  }
+  // componentDidMount() {
+  //   // This function will run once when the component mounts
+  //   if(this.props.batch){
+  //   Meteor.call('lobbyStatus', this.props.batch.gameLobbyIds[0], (error, result) => {
+  //     if (error) {
+  //       console.error('Error fetching for lobby status:', error);
+  //     } else {
+  //       this.setState({ lobbyStatus: result }); // Update the state with the fetched result
+  //       console.log('Lobby document:', result);
+  //     }
+  //   });
+  //   }
+  
+  // }
+
   render() {
     const { loading, batch, treatments, archived } = this.props;
     const { detailsVisible } = this.state;
+    const {lobbyStatus} = this.state;
 
     if (loading) {
       return (
@@ -131,6 +202,18 @@ export default class AdminBatch extends React.Component {
         onClick={this.handleDuplicate}
       />
     );
+
+    // only shows start game manually button if game lobby status is init.
+    // if(lobbyStatus==="init"){
+    //   actions.push(
+    //   <Button
+    //     text="Start Game Manually"
+    //     icon={IconNames.PLAY}
+    //     key="startgame"
+    //     onClick={this.handleManualStartGame}
+    //   />
+    // );
+    // }
 
     let config;
     switch (batch.assignment) {

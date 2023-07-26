@@ -6,6 +6,35 @@ import { Players } from "../../players/players.js";
 import { createGameFromLobby } from "../../games/create.js";
 import Cron from "../../../startup/server/cron.js";
 
+// export const getLobbyDocument = (gameLobbyID) =>{
+//   const lobbyDoc = GameLobbies.findOne({_id: gameLobbyID});
+
+//   return lobbyDoc;
+// }
+Meteor.methods({
+  getLobbyDocument(gameLobbyID) {
+    const lobbyDoc = GameLobbies.findOne({ _id: gameLobbyID });
+    //create gameFromLobby using Lobby Doc Object
+    createGameFromLobby(lobbyDoc);
+
+    // take care of timing
+
+
+
+    return lobbyDoc;
+  },
+  manualStartGame(gameLobby){
+    console.log(gameLobby);
+    createGameFromLobby(gameLobby);
+    return "created successfully!";
+  },
+  lobbyStatus(gameLobbyID){
+    const lobbyDoc = GameLobbies.findOne({ _id: gameLobbyID });
+    return lobbyDoc.status;
+  }
+});
+
+
 const checkLobbyTimeout = (log, lobby, lobbyConfig) => {
   // Timeout hasn't started yet
   if (!lobby.timeoutStartedAt) {
@@ -39,6 +68,7 @@ const checkLobbyTimeout = (log, lobby, lobbyConfig) => {
       break;
     case "ignore":
       createGameFromLobby(lobby);
+      console.log(lobby);
       break;
 
     // case "bots": {

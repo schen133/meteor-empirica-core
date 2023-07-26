@@ -27,6 +27,40 @@ export default class AdminBatchGame extends React.Component {
     });
   };
 
+    handleManualStartGame = () => {
+    const { game, lobby } = this.props;
+    console.log(lobby.status);
+    // startgame first
+  //   Meteor.call('manualStartGame', lobby, (error, result) => {
+  //   if (error) {
+  //     console.error('Error trying to manually start game:', error);
+  //   } else {
+  //     console.log(lobby.status);
+  //     console.log('message from meteor method', result);
+  //   }
+
+
+  // });
+      console.log("lobby before it gets used to create game");
+      console.log(lobby);
+      Meteor.call('getLobbyDocument', lobby._id, (error, result) => {
+    if (error) {
+      console.error('Error trying to manually start game:', error);
+    } else {
+      console.log(lobby.status);
+      console.log('message from meteor method', result);
+    }
+      console.log("lobby after it gets used to create game");
+      console.log(lobby);
+
+
+
+  });
+
+      console.log(lobby.status);
+
+}
+
   render() {
     const { batch, lobby, game, rounds, stages, treatment } = this.props;
 
@@ -66,6 +100,19 @@ export default class AdminBatchGame extends React.Component {
     let statusIntent;
     let statusMinimal = false;
     let showCancelButton = false;
+    // let showManualStartGameButton = false;
+    let showManualStartGameButton = null;
+    if(lobby.playerIds.length>3){
+       showManualStartGameButton = true;
+    }
+    
+    if(game){
+      // console.log(game);
+      // console.log(showManualStartGameButton);
+      showManualStartGameButton = false;
+      
+    }
+
     if (game && game.status === "cancelled") {
       statusIntent = Intent.DANGER;
       statusMinimal = true;
@@ -115,6 +162,15 @@ export default class AdminBatchGame extends React.Component {
         statusMsg = "lobby";
       }
     }
+
+    // if(!game){
+    //   // console.log(game);
+    //   // console.log(showManualStartGameButton);
+    //   showManualStartGameButton = true;
+
+    // }
+
+    
 
     return (
       <tr>
@@ -246,6 +302,22 @@ export default class AdminBatchGame extends React.Component {
               key="cancel"
               onClick={this.handleStatusChange.bind(this, "cancelled")}
             />
+          )}
+          {showManualStartGameButton ? (
+            <Button
+              text="Start Game Manually"
+              icon={IconNames.PLAY}
+              key="startgame"
+              onClick={this.handleManualStartGame}
+            />  
+          ) : (
+            <Button
+              text="Start Game Manually"
+              icon={IconNames.PLAY}
+              key="startgame"
+              onClick={this.handleManualStartGame}
+              disabled
+            />  
           )}
         </td>
       </tr>
