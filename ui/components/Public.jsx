@@ -28,7 +28,6 @@ const loadDocTitle = document.title;
 
 export default class Public extends React.Component {
   state = { isAboutOpen: false, 
-    showTimer: false,
     timeoutSeconds: null,
     meteorMethodCalled: false
   };
@@ -84,15 +83,15 @@ export default class Public extends React.Component {
     }
   };
 
-    renderTimerComponent = (start, seconds) => {
-      if(seconds){
-  const { timeoutSeconds } = seconds
-    // Replace 'YourTimerComponent' with the actual component you want to render when conditions are met
-    return timeoutSeconds !== null ? <IntroTimer startTime={start.toString()} seconds={seconds}/>
- : null;
-      }
+//     renderTimerComponent = (start, seconds) => {
+//       if(seconds){
+//   const { timeoutSeconds } = seconds
+//     // Replace 'YourTimerComponent' with the actual component you want to render when conditions are met
+//     return timeoutSeconds !== null ? <IntroTimer startTime={start.toString()} seconds={seconds}/>
+//  : null;
+//       }
   
-  };
+//   };
 
   // componentDidMount(){
   //   console.log(this.props);
@@ -131,34 +130,35 @@ export default class Public extends React.Component {
      var showTimer = false;
      var renderYet = false;
 
-    
-    if(gameLobbyy){
-        // console.log("gameLobby exists now");
-        // console.log("There are now somebody in Prelobby");
-        // showTimer = true;
-        if(gameLobbyy.timeoutStartedAt){
-          showTimer = true;
-          // this.setState({showTimer: true})
-        }
-    }
+    // Timer stuff, ignore for now
 
-    if(showTimer==true){
-    Meteor.call('getTimeoutSeconds', gameLobbyy.lobbyConfigId, (error, result) => {
-      if (error) {
-        console.error('Error trying to fetch for lobbyConfigID', error);
-      } else {
-        console.log('message from meteor method', result);
-        timeoutSeconds=result;
-        console.log(timeoutSeconds);
-        console.log(renderYet);
-      }
-    });
-    }
+    // if(gameLobbyy){
+    //     // console.log("gameLobby exists now");
+    //     // console.log("There are now somebody in Prelobby");
+    //     // showTimer = true;
+    //     if(gameLobbyy.timeoutStartedAt){
+    //       showTimer = true;
+    //       // this.setState({showTimer: true})
+    //     }
+    // }
 
-    if(showTimer===true && Number.isInteger(timeoutSeconds)){
-      renderYet = true;
-      console.log(renderYet);
-    }
+    // if(showTimer==true){
+    // Meteor.call('getTimeoutSeconds', gameLobbyy.lobbyConfigId, (error, result) => {
+    //   if (error) {
+    //     console.error('Error trying to fetch for lobbyConfigID', error);
+    //   } else {
+    //     console.log('message from meteor method', result);
+    //     timeoutSeconds=result;
+    //     console.log(timeoutSeconds);
+    //     console.log(renderYet);
+    //   }
+    // });
+    // }
+
+    // if(showTimer===true && Number.isInteger(timeoutSeconds)){
+    //   renderYet = true;
+    //   console.log(renderYet);
+    // }
 
 //     if (timeoutSeconds !== null) {
 //   // Your logic when timeoutSeconds is not null

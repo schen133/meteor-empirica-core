@@ -1,6 +1,5 @@
 import SimpleSchema from "simpl-schema";
 import { ValidatedMethod } from "meteor/mdg:validated-method";
-
 import { Batches } from "./batches";
 import { GameLobbies } from "../game-lobbies/game-lobbies.js";
 import { Games } from "../games/games.js";
