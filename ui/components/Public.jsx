@@ -121,6 +121,8 @@ export default class Public extends React.Component {
       About,
       NoBatch,
       gameLobbyy,
+      lobbyConfigg,
+      gamee,
       ...rest
     } = this.props;
     const { player } = rest;
@@ -132,15 +134,22 @@ export default class Public extends React.Component {
 
     // Timer stuff, ignore for now
 
-    // if(gameLobbyy){
-    //     // console.log("gameLobby exists now");
-    //     // console.log("There are now somebody in Prelobby");
-    //     // showTimer = true;
-    //     if(gameLobbyy.timeoutStartedAt){
-    //       showTimer = true;
-    //       // this.setState({showTimer: true})
-    //     }
-    // }
+    if(gameLobbyy){
+        // console.log("gameLobby exists now");
+        // console.log("There are now somebody in Prelobby");
+        // showTimer = true;
+        if(gameLobbyy.timeoutStartedAt){
+          // showTimer = true;
+          if(!this.props.game){
+            showTimer = true;
+
+          } else {
+            showTimer= false;
+          }
+          // this.setState({showTimer: true})
+        }
+        // console.log(lobbyConfigg.timeoutInSeconds);
+    }
 
     // if(showTimer==true){
     // Meteor.call('getTimeoutSeconds', gameLobbyy.lobbyConfigId, (error, result) => {
@@ -234,10 +243,10 @@ export default class Public extends React.Component {
         {Header !== undefined ? (
           <Header {...adminProps} />
         ) : (
-          <div className="header navbar">
+          <div className="navbar">
           {/* <div className="flex flex-row bg-cyan-900 py-4 text-white"> */}
 
-            <div className="bg-">
+            <div className="navbarGroup">
                         {/* <div className="navbarGroup"> */}
 
               <NavbarHeading>
@@ -256,7 +265,7 @@ export default class Public extends React.Component {
               </NavbarHeading>
             </div>
 
-            <div className="navbarGroup">
+            <div className="flex flex-row py-[15px]">
               {showOpenAltPlayer ? (
                 <Button
                   text="New Player"
@@ -288,12 +297,14 @@ export default class Public extends React.Component {
               ) : (
                 ""
               )}
+
+              {/* <div className="flex flex-row"> */}
               {showTimer ? (
                 <>
                   {/* <h1> timer</h1> */}
                   {/* <IntroTimer /> */}
                   {/* <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()} seconds={timeoutSeconds}/> */}
-                  <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()}/>
+                  <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()} lobbyConfig={lobbyConfigg.timeoutInSeconds}/>
 
                 
                 </>
@@ -335,6 +346,7 @@ export default class Public extends React.Component {
             </div>
           </div>
         )}
+        
 
         <main className="">
         

@@ -21,7 +21,7 @@ export default class IntroTimer extends React.Component {
   }
 
   calculateTimeRemaining() {
-    const targetTime = new Date(this.props.startTime).getTime() + 2 * 60 * 1000;
+    const targetTime = new Date(this.props.startTime).getTime() + this.props.lobbyConfig * 1000;
     const currentTime = new Date().getTime();
     const timeDifference = targetTime - currentTime;
     const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
@@ -30,7 +30,13 @@ export default class IntroTimer extends React.Component {
   }
 
   render() {
-    return <div>{this.state.timeRemaining}</div>;
+    return <div className="mt-[1.1rem] ml-[1rem] w-[250px] flex flex-row">
+    <p className="w-[44px] text-red-500 font-semibold">    {this.state.timeRemaining} 
+</p>
+    <p className="">Minutes till the game starts
+        </p>
+    
+    </div>;
   }
 
 

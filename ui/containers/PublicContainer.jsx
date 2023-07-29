@@ -10,10 +10,17 @@ import { Players } from "../../api/players/players.js";
 import { ActivityMonitor } from "../../lib/monitor.js";
 import Public from "../components/Public";
 
-const withStageDependencies = withTracker(({ loading, game, gameLobby, ...rest }) => {
+// chris' code
+import { LobbyConfigs } from "../../api/lobby-configs/lobby-configs.js";
+
+const withStageDependencies = withTracker(({ loading, game, gameLobby, lobbyConfig, ...rest }) => {
   const gameId = game && game._id;
   const stageId = game && game.currentStageId;
+
+  // chris' code
   const gameLobbyy = gameLobby;
+  const lobbyConfigg = lobbyConfig;
+  const gamee = game;
 
   const sub = Meteor.subscribe("gameCurrentRoundStage", {
     gameId,
@@ -41,12 +48,14 @@ const withStageDependencies = withTracker(({ loading, game, gameLobby, ...rest }
     stages,
     round,
     gameLobbyy,
+    lobbyConfigg,
+    gamee,
     ...rest
   };
 })(Public);
 
 const withGameDependencies = withTracker(
-  ({ loading, game, gameLobby, ...rest }) => {
+  ({ loading, game, gameLobby, lobbyConfig, ...rest }) => {
     if (loading) {
       return { loading: true };
     }
@@ -65,6 +74,7 @@ const withGameDependencies = withTracker(
       loading: !sub.ready() || !subTreatment.ready() || !subGameLobby.ready(),
       game,
       gameLobby,
+      lobbyConfig,
       ...rest
     };
   }
@@ -80,6 +90,7 @@ export default withTracker(({ loading, player, playerId, ...rest }) => {
   const subBatches = Meteor.subscribe("runningBatches", { playerId });
   const subLobby = Meteor.subscribe("gameLobby", { playerId });
   const subGame = Meteor.subscribe("game", { playerId });
+
   loading = !subBatches.ready() || !subLobby.ready() || !subGame.ready();
 
   // Are there non-full batches left
@@ -90,6 +101,14 @@ export default withTracker(({ loading, player, playerId, ...rest }) => {
     $or: [{ playerIds: playerId }, { queuedPlayerIds: playerId }]
   });
   const game = Games.findOne({ playerIds: playerId });
+
+    // chris' code
+  // const subLobbyConfig = Meteor.subscribe
+  var lobbyConfig = null;
+  if(gameLobby){
+     lobbyConfig = LobbyConfigs.findOne({_id : gameLobby.lobbyConfigId})
+  }
+  // const lobbyConfig = LobbyConfigs.findOne({_id : gameLobby.lobbyConfigId})
 
   if (player && !game && !gameLobby) {
     return { loading: true };
@@ -113,6 +132,7 @@ export default withTracker(({ loading, player, playerId, ...rest }) => {
     player,
     gameLobby,
     game,
+    lobbyConfig,
     ...rest
   };
 })(withGameDependencies);

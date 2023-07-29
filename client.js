@@ -107,7 +107,9 @@ const Empirica = {
       </BrowserRouter>
     );
   },
-
+// IdentifiedContainer() is using a wrapper container called
+// IdentifiedContainer component from the other file to wrap using
+// the PublicContainer meanwhile also passing a config prop
   appComp() {
     return IdentifiedContainer(PublicContainer, config);
   },
