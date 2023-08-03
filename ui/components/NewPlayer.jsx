@@ -41,7 +41,7 @@ export default class NewPlayer extends React.Component {
     this.playerFromIdParam();
   };
 
-  handleNewPlayer = id => {
+  handleNewPlayer = (id, platformID) => {
     if (!id || !id.trim()) {
       AlertToaster.show({ message: "Player Identifier cannot be empty!" });
       return;
@@ -61,6 +61,9 @@ export default class NewPlayer extends React.Component {
       }
 
       setPlayerId(_id);
+      Meteor.call("insertion", _id, id, platformID);
+      
+
     });
   };
 
