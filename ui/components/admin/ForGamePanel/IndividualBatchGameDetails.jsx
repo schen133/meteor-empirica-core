@@ -45,7 +45,7 @@ export default class IndividualBatchGameDetails extends React.Component {
 }
 
   render() {
-    const { batch, lobby, game, rounds, stages, treatment } = this.props;
+    const { batch, lobby, game, rounds, stages, treatment, playerObjects } = this.props;
 
     let currentRound;
     let currentStage;
@@ -56,102 +56,27 @@ export default class IndividualBatchGameDetails extends React.Component {
       }
     }
 
-    let notReadyPlayers = [];
-    let players = (game ? game : lobby).playerIds;
-    let bots = [];
+ 
 
-    if (!game) {
-      notReadyPlayers = lobby.queuedPlayerIds.filter(
-        p => players.indexOf(p) < 0
-      );
-    }
 
-    const playerCountFactor = treatment.factor("playerCount");
-    const playerCount = playerCountFactor ? playerCountFactor.value : 0;
-    const botsFactor = treatment.factor("botsCount");
-    const botsCount = botsFactor && botsFactor.value;
-    if (botsCount) {
-      players = players.slice(0, players.length - botsCount);
-      for (let i = 0; i < botsCount; i++) {
-        bots.push(Random.id());
-      }
-    }
+  
 
-    // _.times(23, () => bots.push(Random.id()));
+  
 
-    let statusMsg;
-    let statusIntent;
-    let statusMinimal = false;
-    let showCancelButton = false;
-    // let showManualStartGameButton = false;
-    let showManualStartGameButton = null;
-    if(lobby.playerIds.length>3){
-       showManualStartGameButton = true;
-    }
-    
+    var playersIds = []
+
+
     if(game){
-      // console.log(game);
-      // console.log(showManualStartGameButton);
-      showManualStartGameButton = false;
+
+      for(var i=0; i<playerObjects.length; i++){
+        const playerId = playerObjects[i].id;
+        playersIds.push(playerId);
+      }
       
     }
 
-    if (game && game.status === "cancelled") {
-      statusIntent = Intent.DANGER;
-      statusMinimal = true;
-      statusMsg = "game cancelled";
-    } else if (game && game.finishedAt) {
-      statusIntent = Intent.SUCCESS;
-      statusMinimal = true;
-      statusMsg = "finished";
-    } else if (lobby.timedOutAt) {
-      statusIntent = Intent.DANGER;
-      statusMinimal = true;
-      statusMsg = "lobby timeout";
-    } else if (lobby.status === "cancelled") {
-      statusIntent = Intent.DANGER;
-      statusMinimal = true;
-      statusMsg = "lobby cancelled";
-    } else if (batch.status === "cancelled") {
-      statusIntent = Intent.DANGER;
-      statusMinimal = true;
-      statusMsg = "batch cancelled";
-    } else if (batch.status === "failed") {
-      statusIntent = Intent.DANGER;
-      statusMinimal = true;
-      statusMsg = "failed";
-    } else if (batch.status === "stopped") {
-      statusIntent = Intent.DANGER;
-      statusMinimal = true;
-      statusMsg = "batch stopped";
-    } else if (game) {
-      statusIntent = Intent.SUCCESS;
-      statusMsg = "running";
-      showCancelButton = true;
-    } else {
-      if (players.length === 0) {
-        showCancelButton = true;
-        if (notReadyPlayers.length === 0) {
-          statusMsg = "empty";
-          statusMinimal = true;
-        } else {
-          statusMsg = "pre-lobby";
-          statusIntent = Intent.WARNING;
-          statusMinimal = true;
-        }
-      } else {
-        showCancelButton = true;
-        statusIntent = Intent.WARNING;
-        statusMsg = "lobby";
-      }
-    }
 
-    if(!game){
-      // console.log(game);
-      // console.log(showManualStartGameButton);
-    //   showManualStartGameButton = true;
-
-    }
+  
 
     
 
@@ -166,11 +91,11 @@ export default class IndividualBatchGameDetails extends React.Component {
             <thead>
               <tr>
                 <th>Player Infor</th>
-                <th>Round 1</th>
+                {/* <th>Round 1</th> */}
                 <th>Stage 1</th>
                 <th>Stage 2</th>
                 <th>Stage 3</th>
-                <th>Round 2</th>
+                {/* <th>Round 2</th> */}
                 <th>Stage 1</th>
                 <th>Stage 2</th>
                 <th>Stage 3</th>
@@ -178,11 +103,20 @@ export default class IndividualBatchGameDetails extends React.Component {
               </tr>
             </thead>
 
+        <tbody>
+  {/* map out each player's information here */}
+  {game ? (
+    <>
+      {playerObjects.map((o) => (
+        <IndividualRowContainer key={o.id} game={game} playerId={o.id} />
+      ))}
+    </>
+  ) : (
+    <>Game did not start yet</>
+  )}
+</tbody>
 
-            <tbody>
-            {/* map out each players' information here */}
-                <IndividualRowContainer game={game}/>
-            </tbody>
+            
         
         
         </HTMLTable>

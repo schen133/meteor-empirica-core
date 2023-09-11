@@ -25,15 +25,15 @@ import { Games } from "../games";
 //   return [Players.find({ gameLobbyId })];
 // });
 
-Meteor.publish("all-stages", function({ stageId }) {
-  if (!stageId) {
-    return [];
-  }
+// Meteor.publish("all-stages", function({ stageId }) {
+//   if (!stageId) {
+//     return [];
+//   }
 
-//   const stage = Stages.findOne(stageId);
-//   const roundId = stage.roundId;
+// //   const stage = Stages.findOne(stageId);
+// //   const roundId = stage.roundId;
 
-  return [
-    PlayerStages.find({ stageId: stageId })
-  ];
-});
+//   return [
+//     PlayerStages.find({ stageId: stageId })
+//   ];
+// });

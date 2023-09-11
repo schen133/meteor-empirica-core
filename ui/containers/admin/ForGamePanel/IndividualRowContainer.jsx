@@ -5,7 +5,7 @@ import { PlayerStages } from '../../../../api/player-stages/player-stages';
 import { PlayerRounds } from '../../../../api/player-rounds/player-rounds';
 import { GameLobbies } from "../../../../api/game-lobbies/game-lobbies";
 import { Games } from "../../../../api/games/games";
-
+import { Players } from '../../../../api/players/players';
 import { Stages } from '../../../../api/stages/stages';
 
 
@@ -33,18 +33,23 @@ export default withTracker(props => {
   //   });
   // }
 
-  
+  //  const gameInforLoading = !Meteor.subscribe("admin-batch", {
+  //   batchId
+  // }).ready();
 
-
-
-    const sub = Meteor.subscribe("gameCurrentRoundStage", {
+// subscribe to what's published in order to access data
+  const sub = Meteor.subscribe("gameCurrentRoundStage", {
     gameId,
     stageId
   });
+  Meteor.subscribe("admin-players", {
+  })
 
   const stagesArray = PlayerStages.find({ stageId }).fetch();
 
 
+  const players = Players.find({gameId}).fetch();
+  
 
 
 //  const stages = Stages.find({ gameId, roundId: stage.roundId }).fetch();
@@ -59,7 +64,9 @@ export default withTracker(props => {
 
 
   return {
+    gameLoading: stagesArray.length===0,
     stagesArray,
+    players,
     ...props
   };
 })(IndividualRow);
