@@ -1,11 +1,11 @@
 import { withTracker } from "meteor/react-meteor-data";
 
-import { Batches } from "../../../api/batches/batches";
-import { Factors } from "../../../api/factors/factors.js";
-import { FactorTypes } from "../../../api/factor-types/factor-types.js";
-import { LobbyConfigs } from "../../../api/lobby-configs/lobby-configs.js";
-import { Treatments } from "../../../api/treatments/treatments";
-import AdminBatches from "../../components/admin/AdminBatches";
+import { Batches } from "../../../../api/batches/batches";
+import { Factors } from "../../../../api/factors/factors.js";
+import { FactorTypes } from "../../../../api/factor-types/factor-types.js";
+import { LobbyConfigs } from "../../../../api/lobby-configs/lobby-configs.js";
+import { Treatments } from "../../../../api/treatments/treatments";
+import AdminGames from "../../../components/admin/ForGamePanel/AdminGames";
 
 export default withTracker(props => {
   const { archived } = props;
@@ -76,4 +76,4 @@ export default withTracker(props => {
     lobbyConfigs: LobbyConfigs.find().fetch(),
     ...props
   };
-})(AdminBatches);
+})(AdminGames);

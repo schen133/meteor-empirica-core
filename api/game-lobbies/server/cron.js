@@ -24,7 +24,7 @@ Meteor.methods({
     return lobbyDoc;
   },
   manualStartGame(gameLobby){
-    console.log(gameLobby);
+    // console.log(gameLobby);
     createGameFromLobby(gameLobby);
     return "created successfully!";
   },
@@ -68,7 +68,7 @@ const checkLobbyTimeout = (log, lobby, lobbyConfig) => {
       break;
     case "ignore":
       createGameFromLobby(lobby);
-      console.log(lobby);
+      // console.log(lobby);
       break;
 
     // case "bots": {

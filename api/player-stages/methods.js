@@ -3,6 +3,29 @@ import SimpleSchema from "simpl-schema";
 import { PlayerStages } from "./player-stages";
 import shared from "../../shared.js";
 
+
+export const getMatchingPlayerStages = new ValidatedMethod({
+  name: "PlayerStages.methods.getMatchingStages",
+
+  validate: new SimpleSchema({
+    stageId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+
+  run({ stageId }) {
+    if (!this.userId) {
+      throw new Error("Unauthorized access"); // You can customize the error message
+    }
+
+    // Fetch all documents in PlayerStages collection with matching stageId
+    const matchingStages = PlayerStages.find({ stageId: stageId }).fetch();
+
+    return matchingStages;
+  }
+});
+
 export const updatePlayerStageData = new ValidatedMethod({
   name: "PlayerStages.methods.updateData",
 

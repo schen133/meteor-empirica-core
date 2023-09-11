@@ -28,6 +28,9 @@ const withStageDependencies = withTracker(({ loading, game, gameLobby, lobbyConf
   });
 
   const playerStage = PlayerStages.findOne({ gameId, stageId });
+
+  // const playerStage="Hello"
+
   const playerRound =
     playerStage &&
     PlayerRounds.findOne({ gameId, roundId: playerStage.roundId });
@@ -39,7 +42,7 @@ const withStageDependencies = withTracker(({ loading, game, gameLobby, lobbyConf
 //  const gameLobby = GameLobbies.findOne({
 //     $or: [{ playerIds: playerId }, { queuedPlayerIds: playerId }]
 //   });
-  return {
+ return {
     loading: loading || !sub.ready(),
     game,
     playerStage,

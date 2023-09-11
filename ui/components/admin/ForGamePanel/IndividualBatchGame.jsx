@@ -2,10 +2,10 @@ import { Icon, Intent, Tag, Button } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import moment from "moment";
 import React from "react";
-import { earlyExitGameLobby } from "../../../api/game-lobbies/methods";
-import { earlyExitGame } from "../../../api/games/methods";
+import { earlyExitGameLobby } from "../../../../api/game-lobbies/methods";
+import { earlyExitGame } from "../../../../api/games/methods";
 
-export default class AdminBatchGame extends React.Component {
+export default class IndividualBatchGame extends React.Component {
   handleStatusChange = (status, event) => {
     event.preventDefault();
     const { game, lobby } = this.props;
@@ -173,8 +173,8 @@ export default class AdminBatchGame extends React.Component {
     
 
     return (
-      <>
-      <tr>
+  <>
+    <tr>
         <td>{lobby.index + 1}</td>
         <td>
           <Tag intent={statusIntent} minimal={statusMinimal}>
@@ -295,36 +295,13 @@ export default class AdminBatchGame extends React.Component {
             ""
           )}
         </td>
-        <td>
-          {showCancelButton && (
-            <Button
-              text="Cancel"
-              icon={IconNames.STOP}
-              key="cancel"
-              onClick={this.handleStatusChange.bind(this, "cancelled")}
-            />
-          )}
-          {showManualStartGameButton ? (
-            <Button
-              text="Start Game Manually"
-              icon={IconNames.PLAY}
-              key="startgame"
-              onClick={this.handleManualStartGame}
-            />  
-          ) : (
-            <Button
-              text="Start Game Manually"
-              icon={IconNames.PLAY}
-              key="startgame"
-              onClick={this.handleManualStartGame}
-              disabled
-            />  
-          )}
-        </td>
-      </tr>
+       
+    </tr>
 
-      <div> Hello, this is more detail of game</div> 
-      </>
+    {/* <div> Hello, this is IndividualBatchGame component detail of game</div>  */}
+         
+
+  </>
     );
   }
 }

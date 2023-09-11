@@ -1,7 +1,8 @@
 import { withTracker } from "meteor/react-meteor-data";
-import { Rounds } from "../../../api/rounds/rounds";
-import { Stages } from "../../../api/stages/stages";
-import AdminBatchGame from "../../components/admin/AdminBatchGame";
+import { Rounds } from "../../../../api/rounds/rounds";
+import { Stages } from "../../../../api/stages/stages";
+import AdminBatchGame from "../../../components/admin/AdminBatchGame";
+import IndividualBatchGame from "../../../components/admin/ForGamePanel/IndividualBatchGame";
 
 export default withTracker(props => {
   const { game } = props;
@@ -25,4 +26,4 @@ export default withTracker(props => {
     stages,
     ...props
   };
-})(AdminBatchGame);
+})(IndividualBatchGame);
