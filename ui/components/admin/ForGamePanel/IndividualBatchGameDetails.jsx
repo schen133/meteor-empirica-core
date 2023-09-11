@@ -108,7 +108,7 @@ export default class IndividualBatchGameDetails extends React.Component {
   {game ? (
     <>
       {playerObjects.map((o) => (
-        <IndividualRowContainer key={o.id} game={game} playerId={o.id} />
+        <IndividualRowContainer key={o.id} game={game} playerId={o.id} player_id={o._id}/>
       ))}
     </>
   ) : (

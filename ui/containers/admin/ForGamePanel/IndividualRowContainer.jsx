@@ -10,7 +10,7 @@ import { Stages } from '../../../../api/stages/stages';
 
 
 export default withTracker(props => {
-  const { batchId, game } = props;
+  const { batchId, game, player_id } = props;
 
   const gameId = game && game._id;
   const stageId = game && game.currentStageId;
@@ -49,7 +49,28 @@ export default withTracker(props => {
 
 
   const players = Players.find({gameId}).fetch();
-  
+
+
+  var currentStageObject = null;
+  var taskSubmitted = false;
+  // find the corresponding stage for player.
+  if(stagesArray){
+    for(var i = 0; i<stagesArray.length; i++){
+      var tempStageObject = stagesArray[i];
+      
+      if(tempStageObject.playerId === player_id){
+        if(tempStageObject.gameId === gameId){
+          currentStageObject = tempStageObject;
+        }
+      }
+    }
+
+  }
+
+if (currentStageObject && currentStageObject.submittedAt) {
+  taskSubmitted = true;
+}
+
 
 
 //  const stages = Stages.find({ gameId, roundId: stage.roundId }).fetch();
@@ -66,6 +87,8 @@ export default withTracker(props => {
   return {
     gameLoading: stagesArray.length===0,
     stagesArray,
+    currentStageObject,
+    taskSubmitted,
     players,
     ...props
   };

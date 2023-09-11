@@ -5,13 +5,15 @@ import React from "react";
 export default class IndividualRow extends React.Component {
 
 render() {
-    const { loading, game, players, stagesArray, playerId } = this.props;
+    const { loading, game, players, stagesArray, playerId, currentStageObject, taskSubmitted } = this.props;
 
 
 
     var playersIds = []
 
     var playersStageStatus = []
+
+    var showSubmitted = false;
     
 
     if(!loading){
@@ -20,6 +22,15 @@ render() {
             playersIds.push(playerId);
         }
     }
+
+    if(taskSubmitted){
+        showSubmitted = true;
+    }
+
+
+    // if(true){
+    //     showSubmitted = true;
+    // }
 
 
     const handleTestingClick = () => {
@@ -35,7 +46,7 @@ render() {
     return(
             <tr>
                 <td> {playerId}</td>  
-                <td> Submitted</td>   
+                <td> {showSubmitted ? (<>Submitted</>) : (<>In progress</>)}</td>   
                 <td> Upcoming </td>       
                 <td> Upcoming</td>
                 <td> Upcoming</td>
