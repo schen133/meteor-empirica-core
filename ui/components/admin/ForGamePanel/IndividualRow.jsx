@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 export default class IndividualRow extends React.Component {
 
 render() {
@@ -58,13 +56,16 @@ render() {
                     <button onClick={handleTestingClick}>Testing button</button>
                 </td> */}
 
-          {game ? (
-  submittedExistingCheckArray.map((object) => (
-    object ? (<td>Submitted</td>) : (<td>Upcoming</td>)
-  ))
-) : (
-  <div>Game did not start yet</div>
-)}
+          {game ? 
+          (submittedExistingCheckArray.map((object) => (
+            object ? 
+                (<td>Submitted</td>) 
+                : 
+                (<td>Upcoming</td>)
+            ))
+           ) : 
+           (<div>Game did not start yet</div>)
+           }
 
             </tr>
 

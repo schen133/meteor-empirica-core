@@ -91,14 +91,9 @@ export default class IndividualBatchGameDetails extends React.Component {
             <thead>
               <tr>
                 <th>Player Infor</th>
-                {/* <th>Round 1</th> */}
-                <th>Stage 1</th>
-                <th>Stage 2</th>
-                <th>Stage 3</th>
-                {/* <th>Round 2</th> */}
-                <th>Stage 1</th>
-                <th>Stage 2</th>
-                <th>Stage 3</th>
+                 {[...Array(15)].map((_, index) => (
+                 <th key={index}>Stage {index%3+1}</th>
+                 ))}
                
               </tr>
             </thead>
