@@ -5,9 +5,8 @@ import React from "react";
 export default class IndividualRow extends React.Component {
 
 render() {
-    const { loading, game, players, stagesArray, playerId, currentStageObject, taskSubmitted } = this.props;
-
-
+    const { loading, game, players, stagesArray, playerId, submittedExistingCheckArray
+ } = this.props;
 
     var playersIds = []
 
@@ -23,7 +22,8 @@ render() {
         }
     }
 
-    if(taskSubmitted){
+    // if game exists, the check submitted array has to be existing already
+    if(game){
         showSubmitted = true;
     }
 
@@ -33,12 +33,12 @@ render() {
     // }
 
 
-    const handleTestingClick = () => {
-        console.log(game.currentStageId);
-        // console.log(stagesArray);
-        // console.log(stages);
-        console.log(playersIds);
-    }
+    // const handleTestingClick = () => {
+    //     console.log(game.currentStageId);
+    //     // console.log(stagesArray);
+    //     // console.log(stages);
+    //     console.log(playersIds);
+    // }
 
     
 
@@ -46,7 +46,9 @@ render() {
     return(
             <tr>
                 <td> {playerId}</td>  
-                <td> {showSubmitted ? (<>Submitted</>) : (<>In progress</>)}</td>   
+
+
+                {/* <td> {showSubmitted ? (<>Submitted</>) : (<>In progress</>)}</td>   
                 <td> Upcoming </td>       
                 <td> Upcoming</td>
                 <td> Upcoming</td>
@@ -54,7 +56,15 @@ render() {
 
                 <td>             
                     <button onClick={handleTestingClick}>Testing button</button>
-                </td>
+                </td> */}
+
+          {game ? (
+  submittedExistingCheckArray.map((object) => (
+    object ? (<td>Submitted</td>) : (<td>Upcoming</td>)
+  ))
+) : (
+  <div>Game did not start yet</div>
+)}
 
             </tr>
 

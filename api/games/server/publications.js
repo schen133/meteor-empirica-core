@@ -40,3 +40,17 @@ Meteor.publish("gameCurrentRoundStage", function({ gameId, stageId }) {
     PlayerStages.find({ gameId, stageId })
   ];
 });
+
+Meteor.publish("playerIdAndGameIdStagesLookUp", function({ gameId, playerId}) {
+  if (!gameId || !playerId) {
+    return [];
+  }
+
+  // const stage = Stages.findOne(stageId);
+  // const roundId = stage.roundId;
+
+  return [
+    PlayerRounds.find({ gameId, playerId }),
+    PlayerStages.find({ gameId, playerId })
+  ];
+});
