@@ -85,10 +85,20 @@ export default class IndividualBatchGameDetails extends React.Component {
         {game ? (<h1 className="text-2xl">This is the status of current ongoing game</h1>) 
               : (<h1 className="text-2xl">Game did not start yet</h1>)
         }
-          
-        <HTMLTable condensed className="bp3-html-table-bordered batch-games-table"
-> 
+     
+        <HTMLTable condensed className="bp3-html-table-bordered batch-games-table"> 
             <thead>
+              <tr className="border-b-[1px]"> 
+              <th> Rounds </th>
+               {[...Array(15)].map((_, index) => (
+
+                (index%3==1 ? 
+                  (<th key={index}>Round {Math.floor(index / 3) + 1}</th>)
+                  :
+                  (<th> </th>)
+                )
+                 ))}
+              </tr> 
               <tr>
                 <th>Player Infor</th>
                  {[...Array(15)].map((_, index) => (
