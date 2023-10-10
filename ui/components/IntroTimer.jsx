@@ -5,6 +5,7 @@ export default class IntroTimer extends React.Component {
     super(props);
     this.state = {
       timeRemaining: this.calculateTimeRemaining(),
+      timeDraft: "hello"
     };
   }
 
@@ -30,13 +31,12 @@ export default class IntroTimer extends React.Component {
   }
 
   render() {
-    return <div className="mt-[1.1rem] ml-[1rem] w-[250px] flex flex-row">
-    <p className="w-[44px] text-red-500 font-semibold">    {this.state.timeRemaining} 
-</p>
-    <p className="">Minutes till the game starts
-        </p>
+
+    return (
+    <p className="w-[44px] text-red-500 font-semibold">{this.state.timeRemaining} </p>
+    )
+   
     
-    </div>;
   }
 
 

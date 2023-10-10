@@ -37,6 +37,7 @@ export default class IndividualBatchGames extends React.Component {
                 <th>Start Time</th>
                 <th>Finish Time</th>
                 <th>Current State</th>
+                <th>Current stage time left</th>
                 <th>Player Count</th>
                 <th>Players</th>
                 {/* <th /> */}

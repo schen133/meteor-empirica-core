@@ -21,7 +21,7 @@ import { CoreWrapper } from "./Helpers.jsx";
 import Loading from "./Loading.jsx";
 import NewPlayer from "./NewPlayer.jsx";
 import NoBatchOriginal from "./NoBatch.jsx";
-import IntroTimer from "./PublicLobbyTimer.jsx";
+import IntroTimer from "./IntroTimer.jsx";
 // import { Log } from 'meteor/logging'
 
 const loadDocTitle = document.title;
@@ -300,14 +300,14 @@ export default class Public extends React.Component {
 
               {/* <div className="flex flex-row"> */}
               {showTimer ? (
-                <>
-                  {/* <h1> timer</h1> */}
+                <div className="mt-[1.1rem] ml-[1rem] w-[250px] flex flex-row">                  {/* <h1> timer</h1> */}
                   {/* <IntroTimer /> */}
                   {/* <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()} seconds={timeoutSeconds}/> */}
                   <IntroTimer startTime={gameLobbyy.timeoutStartedAt.toString()} lobbyConfig={lobbyConfigg.timeoutInSeconds}/>
+                   <p className="">Minutes till the game starts</p>
 
                 
-                </>
+                </div>
               ) : ("")}
 
         {/* {showTimer && this.renderTimerComponent(gameLobbyy.timeoutStartedAt, timeoutSeconds)} */}

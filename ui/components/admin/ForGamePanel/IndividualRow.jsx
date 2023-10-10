@@ -1,9 +1,10 @@
 import React from "react";
+import { Icon, Intent, Tag, Button } from "@blueprintjs/core";
 
 export default class IndividualRow extends React.Component {
 
 render() {
-    const { loading, game, players, stagesArray, playerId, submittedExistingCheckArray
+    const { loading, game, players, stagesArray, playerId, submittedExistingCheckArray, playerNodeId
  } = this.props;
 
     var playersIds = []
@@ -43,7 +44,7 @@ render() {
 
     return(
             <tr>
-                <td> {playerId}</td>  
+                <td> {playerId} NodeID:{playerNodeId}</td>  
 
 
                 {/* <td> {showSubmitted ? (<>Submitted</>) : (<>In progress</>)}</td>   
@@ -59,9 +60,13 @@ render() {
           {game ? 
           (submittedExistingCheckArray.map((object) => (
             object ? 
-                (<td>Submitted</td>) 
+                (<td>  <Tag intent={Intent.SUCCESS} minimal={true}>
+            Submitted
+          </Tag></td>) 
                 : 
-                (<td>Upcoming</td>)
+                (<td>  <Tag intent={Intent.WARNING} minimal={true}>
+            Upcoming
+          </Tag></td>)
             ))
            ) : 
            (<div>Game did not start yet</div>)

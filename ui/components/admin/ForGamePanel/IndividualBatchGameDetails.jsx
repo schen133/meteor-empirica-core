@@ -92,7 +92,7 @@ export default class IndividualBatchGameDetails extends React.Component {
               <th> Rounds </th>
                {[...Array(15)].map((_, index) => (
 
-                (index%3==1 ? 
+                (index%3==0 ? 
                   (<th key={index}>Round {Math.floor(index / 3) + 1}</th>)
                   :
                   (<th> </th>)
@@ -104,16 +104,15 @@ export default class IndividualBatchGameDetails extends React.Component {
                  {[...Array(15)].map((_, index) => (
                  <th key={index}>Stage {index%3+1}</th>
                  ))}
-               
+              
               </tr>
             </thead>
-
         <tbody>
   {/* map out each player's information here */}
   {game ? (
     <>
       {playerObjects.map((o) => (
-        <IndividualRowContainer key={o.id} game={game} playerId={o.id} player_id={o._id}/>
+        <IndividualRowContainer key={o.id} game={game} playerId={o.id} player_id={o._id} playerNodeId={o.data.nodeId}/>
       ))}
     </>
   ) : (

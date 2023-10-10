@@ -4,6 +4,7 @@ import moment from "moment";
 import React from "react";
 import { earlyExitGameLobby } from "../../../../api/game-lobbies/methods";
 import { earlyExitGame } from "../../../../api/games/methods";
+import IntroTimerContainer from "../../../containers/admin/ForGamePanel/IntroTimerContainer";
 
 export default class IndividualBatchGame extends React.Component {
   handleStatusChange = (status, event) => {
@@ -64,12 +65,19 @@ export default class IndividualBatchGame extends React.Component {
   render() {
     const { batch, lobby, game, rounds, stages, treatment } = this.props;
 
-    let currentRound;
-    let currentStage;
+    // var startTime = null;
+    // var timeDuration = null;
+    var showTimer = false;
+  
     if (game) {
       currentStage = stages.find(s => s._id === game.currentStageId);
       if (currentStage) {
         currentRound = rounds.find(r => r._id === currentStage.roundId);
+          // startTime = currentStage.startTimeAt;
+          // timeDuration = currentStage.durationInSeconds;
+
+          showTimer = true;
+        
       }
     }
 
@@ -211,6 +219,12 @@ export default class IndividualBatchGame extends React.Component {
             </td>
           </>
         )}
+        <td> {currentStage ? 
+        
+        (<><IntroTimerContainer game={game} /> </>)
+        : 
+        (<>Game did not start yet</>)}
+        </td>
         <td>{playerCount}</td>
         <td>
           {bots.length > 0 ? (

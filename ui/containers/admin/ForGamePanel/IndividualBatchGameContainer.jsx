@@ -20,10 +20,21 @@ export default withTracker(props => {
   const rounds = Rounds.find({ gameId }).fetch();
   const stages = Stages.find({ gameId }).fetch();
 
+  const _id = game.currentStageId;
+
+  const currentStage = Stages.find({gameId, _id }).fetch();
+
+  // this is the startTimeAt attribute of the stage object we f
+  var stageStartTime = 0;
+  var stageTimeDuration = 0;
+
+  
+
   return {
     loading: gameLoading,
     rounds,
     stages,
+    currentStage,
     ...props
   };
 })(IndividualBatchGame);

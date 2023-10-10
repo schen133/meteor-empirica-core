@@ -8,7 +8,6 @@ import { Games } from "../../../../api/games/games";
 import { Players } from '../../../../api/players/players';
 import { Stages } from '../../../../api/stages/stages';
 
-
 export default withTracker(props => {
   const { batchId, game, player_id } = props;
 
